@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import MainLayout from './components/MainLayout';
+import Dashboard from './pages/Dashboard';
+import Customers from './pages/Customers';
+import Alerts from './pages/Alerts';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="customers" element={<Customers />} />
+          <Route path="alerts" element={<Alerts />} />
+          <Route path="risk-policies" element={<PlaceholderPage title="Risk Policies" />} />
+          <Route path="settings" element={<PlaceholderPage title="Settings" />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+// Placeholder component for future pages
+function PlaceholderPage({ title }) {
+  return (
+    <div style={{ textAlign: 'center', padding: '60px' }}>
+      <h1 style={{ color: '#1e3a8a', marginBottom: '16px' }}>{title}</h1>
+      <p style={{ color: '#64748b', fontSize: '16px' }}>
+        This page will be implemented in future sprints.
+      </p>
+    </div>
+  );
+}
+
+export default App;
