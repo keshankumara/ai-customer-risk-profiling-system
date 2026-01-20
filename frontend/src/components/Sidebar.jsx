@@ -1,13 +1,21 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Sidebar.css';
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userRole');
+    navigate('/login');
+  };
 
   const menuItems = [
-    { path: '/', label: 'Dashboard', icon: '📊' },
+    { path: '/dashboard', label: 'Dashboard', icon: '📊' },
     { path: '/customers', label: 'Customers', icon: '👥' },
     { path: '/alerts', label: 'Alerts', icon: '🚨' },
+    { path: '/user-management', label: 'User Management', icon: '👤' },
     { path: '/risk-policies', label: 'Risk Policies', icon: '📋' },
     { path: '/settings', label: 'Settings', icon: '⚙️' },
   ];
@@ -31,8 +39,13 @@ const Sidebar = () => {
         ))}
       </nav>
       <div className="sidebar-footer">
-        <p className="user-info">Fraud Analyst</p>
-        <p className="user-email">analyst@bank.com</p>
+        <div className="user-info-section">
+          <p className="user-info">Fraud Analyst</p>
+          <p className="user-email">analyst@bank.com</p>
+        </div>
+        <button className="logout-btn" onClick={handleLogout}>
+          🚪 Logout
+        </button>
       </div>
     </aside>
   );
